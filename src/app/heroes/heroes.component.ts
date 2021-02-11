@@ -32,7 +32,14 @@ export class HeroesComponent implements OnInit {
     this.selectedHero = hero;
   }
 
+  // 同期処理
+  // getHeroes(): void {
+  //   this.heroes = this.heroService.getHeroes();
+  // }
+
+  // 非同期処理
   getHeroes(): void {
-    this.heroes = this.heroService.getHeroes();
+    this.heroService.getHeroes()
+        .subscribe(heroes => this.heroes = heroes);
   }
 }
