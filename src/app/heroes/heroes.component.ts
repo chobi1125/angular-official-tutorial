@@ -5,15 +5,7 @@ import { HEROES } from '../mock-heroes';
   selector: 'app-heroes',
   template: `
   <h2>My Heroes</h2>
-  <div *ngIf="selectedHero">
-    <h2>{{selectedHero.name | uppercase}} Details</h2>
-    <div><span>id: </span>{{selectedHero.id}}</div>
-    <div>
-      <label>name:
-        <input [(ngModel)]="selectedHero.name" placeholder="name"/>
-      </label>
-    </div>
-  </div>
+  <app-hero-detail [hero]="selectedHero"></app-hero-detail>
   <ul class="heroes">
     <li *ngFor="let hero of heroes"
       [class.selected]="hero === selectedHero"
