@@ -6,12 +6,11 @@ import { MessageService } from '../message.service';
   selector: 'app-heroes',
   template: `
   <h2>My Heroes</h2>
-  <app-hero-detail [hero]="selectedHero"></app-hero-detail>
   <ul class="heroes">
-    <li *ngFor="let hero of heroes"
-      [class.selected]="hero === selectedHero"
-      (click)="onSelect(hero)">
-      <span class="badge">{{hero.id}}</span> {{hero.name}}
+    <li *ngFor="let hero of heroes">
+      <a routerLink="/detail/{{hero.id}}">
+        <span class="badge">{{hero.id}}</span> {{hero.name}}
+      </a>
     </li>
   </ul>
   `,
@@ -19,29 +18,16 @@ import { MessageService } from '../message.service';
 })
 
 export class HeroesComponent implements OnInit {
-
   heroes: Hero[];
-  selectedHero: Hero;
 
-  constructor(private heroService: HeroService, private messageService: MessageService) { }
+  constructor(private heroService: HeroService) { }
 
   ngOnInit() {
     this.getHeroes();
   }
 
-  onSelect(hero: Hero): void {
-    this.selectedHero = hero;
-    this.messageService.add(`HeroesComponent: Selected hero id=${hero.id}`);
-  }
-
-  // 同期処理
-  // getHeroes(): void {
-  //   this.heroes = this.heroService.getHeroes();
-  // }
-
-  // 非同期処理
   getHeroes(): void {
     this.heroService.getHeroes()
-        .subscribe(heroes => this.heroes = heroes);
+    .subscribe(heroes => this.heroes = heroes);
   }
 }
