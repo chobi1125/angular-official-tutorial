@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -8,8 +9,20 @@ import { Component, OnInit } from '@angular/core';
     <p>{{ message }}</p>
     <button (click)="doClick()">Click</button>
     <div>
-      <p>{{inputMessage}}</p>
+      <p>input:{{input}}</p>
       <input type="text" #field (keyup)="doType(field.value)" />
+    </div>
+    <!-- ngModel -->
+    <div>
+      <p>ngModel:{{ngModelText}}</p>
+      <input type="text" [(ngModel)]="ngModelText" />
+      <!-- テンプレート側で主導して値のバインディングを行ってくれる。 -->
+    </div>
+    <!-- formControl -->
+    <div>
+      <p>formControl:{{myControl.value}}</p>
+      <input type="text" [formControl]="myControl" />
+      <!-- テンプレート側で主導して値のバインディングを行ってくれる。 -->
     </div>
   `,
   styles: [`
@@ -30,7 +43,8 @@ export class AppComponent implements OnInit {
   styleClass: string;
   count: number;
   input: string;
-  inputMessage: string;
+  ngModelText: string;
+  myControl: FormControl;
 
   constructor() {
     setInterval(() => {
@@ -44,6 +58,7 @@ export class AppComponent implements OnInit {
     this.styleClass = "red"
     this.message = "クリックしてください！"
     this.count = 0;
+    this.myControl = new FormControl("ok.");
   }
 
   today() {
@@ -61,6 +76,5 @@ export class AppComponent implements OnInit {
 
   doType(val: string) {
     this.input = val;
-    this.inputMessage = "You type:" + val
   }
 }
